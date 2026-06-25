@@ -1,0 +1,12 @@
+{
+  "name": "@wvdsh/ai",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "sync:skills": "node scripts/sync.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

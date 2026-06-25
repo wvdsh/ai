@@ -1,0 +1,3 @@
+# Mark synced skill files as generated.
+skills/** linguist-generated=true
+providers/*/plugin/skills/** linguist-generated=true

@@ -1,0 +1,19 @@
+{
+  "name": "wavedash",
+  "description": "Wavedash plugin for Claude Code to help build browser games, integrate the Wavedash SDK, and prepare builds for upload and publishing.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Wavedash",
+    "url": "https://wavedash.com"
+  },
+  "homepage": "https://docs.wavedash.com",
+  "repository": "https://github.com/wvdsh/ai",
+  "license": "MIT",
+  "keywords": [
+    "wavedash",
+    "games",
+    "sdk",
+    "publishing",
+    "multiplayer"
+  ]
+}

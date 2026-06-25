@@ -1,0 +1,21 @@
+{
+  "name": "wavedash",
+  "plugins": [
+    {
+      "name": "wavedash",
+      "source": {
+        "source": "local",
+        "path": "./providers/openai/plugin"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "NONE"
+      },
+      "category": "Developer Tools",
+      "interface": {
+        "displayName": "Wavedash",
+        "description": "Build browser games, integrate the Wavedash SDK, and prepare builds for upload and publishing."
+      }
+    }
+  ]
+}
