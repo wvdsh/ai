@@ -1,5 +1,6 @@
 {
   "name": "wavedash",
+  "description": "Official Wavedash plugins and skills for AI coding agents.",
   "owner": {
     "name": "Wavedash",
     "email": "support@wavedash.com"
