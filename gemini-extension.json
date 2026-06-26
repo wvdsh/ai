@@ -1,4 +1,5 @@
 {
   "name": "wavedash",
-  "version": "0.1.0"
+  "version": "0.1.0",
+  "description": "Build browser games, integrate the Wavedash SDK, and prepare builds for upload and publishing."
 }

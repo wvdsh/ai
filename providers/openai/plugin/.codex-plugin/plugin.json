@@ -2,5 +2,40 @@
   "name": "wavedash",
   "version": "0.1.0",
   "description": "Build browser games, integrate the Wavedash SDK, and prepare builds for upload and publishing.",
-  "skills": "./skills/"
+  "author": {
+    "name": "Wavedash",
+    "email": "support@wavedash.com",
+    "url": "https://wavedash.com"
+  },
+  "homepage": "https://docs.wavedash.com/skills",
+  "repository": "https://github.com/wvdsh/ai",
+  "license": "MIT",
+  "keywords": [
+    "wavedash",
+    "games",
+    "sdk",
+    "publishing",
+    "multiplayer"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Wavedash",
+    "shortDescription": "Build and publish browser games on Wavedash.",
+    "longDescription": "Guides Codex through creating browser-playable games, integrating the Wavedash SDK, preparing metadata, and publishing builds to Wavedash.",
+    "developerName": "Wavedash",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Game development",
+      "SDK integration",
+      "Publishing"
+    ],
+    "websiteURL": "https://wavedash.com",
+    "privacyPolicyURL": "https://wavedash.com/privacy",
+    "termsOfServiceURL": "https://wavedash.com/terms",
+    "defaultPrompt": [
+      "Create a browser game and prepare it for Wavedash.",
+      "Integrate the Wavedash SDK into this game.",
+      "Prepare this game for Wavedash publishing."
+    ]
+  }
 }
