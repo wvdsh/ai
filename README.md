@@ -38,3 +38,7 @@ WAVEDASH_SKILLS_SOURCE_DIR=/path/to/wvdsh/docs/skills npm run sync:skills
 
 GitHub Actions runs the same sync daily and commits changes when docs updates
 change the generated skill files.
+
+## License
+
+MIT
