@@ -11,20 +11,23 @@ agent to the right docs and highlights traps agents commonly miss.
 
 ## Always do this
 
-1. Identify the engine/framework, build command, output directory, and requested
+1. Identify whether the user is starting from an existing game or from zero. If
+   no game exists yet, create a small browser-playable game first.
+2. Identify the engine/framework, build command, output directory, and requested
    Wavedash features.
-2. Read the relevant reference file before changing code or giving detailed
+3. Read the relevant reference file before changing code or giving detailed
    instructions. Do not invent SDK methods, event names, constants, CLI flags,
    pricing rules, or content-policy exceptions.
-3. Prefer the CLI for local testing and scripted upload/publish workflows.
-4. Publish only when the user explicitly asks to make a build live.
-5. Use `WAVEDASH_TOKEN` and `--json --no-color --no-update-check` in CI,
+4. Prefer the CLI for local testing and scripted upload/publish workflows.
+5. Publish only when the user explicitly asks to make a build live.
+6. Use `WAVEDASH_TOKEN` and `--json --no-color --no-update-check` in CI,
    cloud-agent, or other headless automation contexts.
 
 ## Routing
 
 | User task | Read first |
 | --- | --- |
+| Start a new game from zero, scaffold a browser game, choose a framework | `references/project-start.md` |
 | Install CLI, authenticate, initialize, test locally, upload, publish | `references/cli.md` |
 | Add or fix SDK calls, player identity, load lifecycle, events | `references/sdk.md` |
 | Add multiplayer, lobbies, networking | `references/sdk.md` |
@@ -38,6 +41,8 @@ agent to the right docs and highlights traps agents commonly miss.
 
 - Every Wavedash game must call `Wavedash.init()` or the engine binding
   equivalent; otherwise the game can stay hidden behind the loading screen.
+- A new game must produce static browser files with an `index.html`; Wavedash is
+  not a server runtime for native binaries or backend services.
 - Test with `wavedash dev` when possible, then smoke-test the uploaded build on
   Wavedash after upload.
 - Do not use Escape as the only pause/menu key; browsers reserve it for

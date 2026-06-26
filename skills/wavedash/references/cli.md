@@ -54,7 +54,16 @@ wavedash auth status --json --no-color --no-update-check
 ```
 
 Use `WAVEDASH_TOKEN` for automation. Do not ask an agent to complete browser
-login in a headless environment.
+login in a headless environment. To store a token without exposing it in shell
+history, pipe it through stdin when supported:
+
+```bash
+printf '%s' "$WAVEDASH_TOKEN" | wavedash auth login --token-stdin --no-color --no-update-check
+```
+
+If an installed CLI rejects `--json`, `--no-color`, `--no-update-check`, or
+`--token-stdin`, it is older than the agent-friendly CLI. Retry the command
+without the unsupported flag and tell the user to update the CLI.
 
 ## Initialize the project
 

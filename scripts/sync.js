@@ -2,7 +2,6 @@
 
 import fs from "node:fs";
 import path from "node:path";
-import { execSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 const repoRoot = path.resolve(
@@ -19,14 +18,6 @@ const skillOutputDirs = [
   path.join(repoRoot, "providers/claude/plugin/skills"),
   path.join(repoRoot, "providers/cursor/plugin/skills"),
   path.join(repoRoot, "providers/openai/plugin/skills"),
-];
-const versionFiles = [
-  path.join(repoRoot, ".claude-plugin/marketplace.json"),
-  path.join(repoRoot, "providers/claude/plugin/.claude-plugin/plugin.json"),
-  path.join(repoRoot, ".cursor-plugin/marketplace.json"),
-  path.join(repoRoot, "providers/cursor/plugin/.cursor-plugin/plugin.json"),
-  path.join(repoRoot, "providers/openai/plugin/.codex-plugin/plugin.json"),
-  path.join(repoRoot, "gemini-extension.json"),
 ];
 
 function fail(message) {
@@ -117,7 +108,11 @@ async function getManifest() {
 }
 
 function validateManifest(manifest) {
-  if (!manifest || manifest.version !== 1 || !Array.isArray(manifest.skills)) {
+  if (
+    !manifest ||
+    (manifest.version !== undefined && manifest.version !== 1) ||
+    !Array.isArray(manifest.skills)
+  ) {
     fail("Invalid skill manifest.");
   }
 
@@ -147,78 +142,6 @@ async function readSkillFile(skillName, file) {
   return fetchText(`${remoteBaseUrl}/${skillName}/${encodedFile}`);
 }
 
-function hasGitHead() {
-  try {
-    execSync("git rev-parse --verify HEAD", {
-      cwd: repoRoot,
-      stdio: "ignore",
-    });
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-function gitSkillStatus() {
-  if (!hasGitHead()) {
-    return "";
-  }
-
-  return execSync("git status --porcelain -- skills", {
-    cwd: repoRoot,
-    encoding: "utf8",
-  });
-}
-
-function bumpVersion(version, type) {
-  const [major, minor, patch] = version.split(".").map(Number);
-  if (type === "minor") {
-    return `${major}.${minor + 1}.0`;
-  }
-  return `${major}.${minor}.${patch + 1}`;
-}
-
-function updateVersionValue(value, type) {
-  if (typeof value === "string" && /^\d+\.\d+\.\d+$/.test(value)) {
-    return bumpVersion(value, type);
-  }
-  return value;
-}
-
-function bumpVersions(type) {
-  for (const file of versionFiles) {
-    const raw = fs.readFileSync(file, "utf8");
-    const json = JSON.parse(raw);
-
-    json.version = updateVersionValue(json.version, type);
-
-    if (Array.isArray(json.plugins)) {
-      for (const plugin of json.plugins) {
-        plugin.version = updateVersionValue(plugin.version, type);
-      }
-    }
-
-    fs.writeFileSync(file, `${JSON.stringify(json, null, 2)}\n`);
-  }
-}
-
-function getSkillChangeType(status) {
-  const lines = status.trim().split("\n").filter(Boolean);
-  const addedOrDeleted = lines.some((line) => {
-    return line.startsWith("??") || line[0] === "D" || line[1] === "D";
-  });
-
-  if (addedOrDeleted) {
-    return "minor";
-  }
-
-  if (lines.length > 0) {
-    return "patch";
-  }
-
-  return null;
-}
-
 async function main() {
   const manifest = await getManifest();
   validateManifest(manifest);
@@ -237,11 +160,6 @@ async function main() {
         fs.writeFileSync(destination, body);
       }
     }
-  }
-
-  const changeType = getSkillChangeType(await gitSkillStatus());
-  if (changeType) {
-    bumpVersions(changeType);
   }
 
   console.log(

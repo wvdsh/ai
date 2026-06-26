@@ -76,6 +76,8 @@ Common automation flags:
 
 Start at https://docs.wavedash.com/engines, then select the project engine.
 Available guides include Godot, Unity, Unreal, Phaser, Three.js, PixiJS,
-Babylon.js, PlayCanvas, Construct, GameMaker, GDevelop, Ren'Py, Ruffle, JSDOS,
-Defold, Bevy, Rust, JavaScript, TypeScript, Python, C, C++, C#, Lua, Go, Haxe,
-Swift, Zig, and custom web builds.
+Babylon.js, PlayCanvas, Construct, Cocos, ct.js, Excalibur, Flame, GameMaker,
+GB Studio, GDevelop, Heaps, KAPLAY, LittleJS, Love2D, melonJS, MonoGame,
+PICO-8, Ren'Py, RPG Maker, Ruffle, JSDOS, Defold, Bevy, Ebiten, KNI, raylib,
+React, Solar2D, Stride, Rust, JavaScript, TypeScript, Python, C, C++, C#, Lua,
+Go, Haxe, Swift, Zig, and custom web builds.

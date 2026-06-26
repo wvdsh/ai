@@ -59,6 +59,83 @@ for types and import ergonomics.
 - Events and exact method names: read `sdk/events`, `sdk/functions`, and
   `sdk/types`.
 
+## JavaScript quick reference
+
+Use this only as a routing and sanity-check reference. Read the canonical docs
+for the feature before implementing non-trivial behavior.
+
+Load lifecycle:
+
+```javascript
+Wavedash.updateLoadProgressZeroToOne(0.5);
+Wavedash.init({ debug: true, deferEvents: true });
+Wavedash.readyForEvents();
+```
+
+Player:
+
+```javascript
+const user = Wavedash.getUser();
+const userId = Wavedash.getUserId();
+const username = Wavedash.getUsername();
+const jwt = await Wavedash.getUserJwt();
+```
+
+Stats and achievements:
+
+```javascript
+await Wavedash.requestStats();
+const kills = Wavedash.getStat("total_kills") || 0;
+Wavedash.setStat("total_kills", kills + 1, true);
+Wavedash.setAchievement("first_blood", true);
+await Wavedash.storeStats();
+```
+
+Leaderboards:
+
+```javascript
+const lb = await Wavedash.getOrCreateLeaderboard(
+  "high-scores",
+  Wavedash.LeaderboardSortOrder.DESC,
+  Wavedash.LeaderboardDisplayType.NUMERIC
+);
+if (lb.success) {
+  await Wavedash.uploadLeaderboardScore(lb.data.id, score, true);
+}
+```
+
+Cloud saves:
+
+```javascript
+await Wavedash.writeLocalFile("saves/slot1.json", bytes);
+await Wavedash.uploadRemoteFile("saves/slot1.json");
+await Wavedash.downloadRemoteFile("saves/slot1.json");
+const bytes = await Wavedash.readLocalFile("saves/slot1.json");
+```
+
+Lobbies and P2P:
+
+```javascript
+Wavedash.on(Wavedash.Events.LOBBY_JOINED, (payload) => {
+  console.log(payload.lobbyId, payload.users.length);
+});
+await Wavedash.createLobby(Wavedash.LobbyVisibility.PUBLIC, 4);
+Wavedash.broadcastP2PMessage(0, true, new Uint8Array([1, 2, 3]));
+const message = Wavedash.readP2PMessageFromChannel(0);
+```
+
+UGC:
+
+```javascript
+const ugc = await Wavedash.createUGCItem(
+  Wavedash.UGCType.COMMUNITY,
+  "Custom arena",
+  "Uploaded from editor",
+  Wavedash.UGCVisibility.PUBLIC,
+  "ugc/levels/arena.wdc"
+);
+```
+
 ## Traps to avoid
 
 - Do not call multiplayer join logic before subscribing to the relevant lobby
