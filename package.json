@@ -5,7 +5,12 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "sync:skills": "node scripts/sync.js"
+    "sync:skills": "node scripts/sync.js",
+    "mcp:start": "npm --prefix mcp start",
+    "mcp:dev": "npm --prefix mcp run dev",
+    "mcp:worker:dev": "npm --prefix mcp run worker:dev",
+    "mcp:deploy:dry-run": "npm --prefix mcp run deploy:dry-run",
+    "mcp:deploy": "npm --prefix mcp run deploy"
   },
   "engines": {
     "node": ">=20"

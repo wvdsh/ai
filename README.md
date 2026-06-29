@@ -7,8 +7,9 @@ is served from `https://docs.wavedash.com/.well-known/skills/index.json`.
 This repo syncs that source into `skills/` so agent platforms can install or
 index the published assets from GitHub.
 
-No MCP server is bundled here. This repo is for skills and provider plugin
-packaging.
+The `mcp/` package contains a read-only, unauthenticated remote MCP server for
+public Wavedash docs. It does not access user accounts, local files, builds, or
+private Wavedash data.
 
 ## Layout
 
@@ -16,6 +17,7 @@ packaging.
 - `providers/claude/plugin/` - Claude Code plugin package.
 - `providers/cursor/plugin/` - Cursor plugin package.
 - `providers/openai/plugin/` - Codex plugin package.
+- `mcp/` - read-only remote MCP server for public Wavedash docs.
 - `.claude-plugin/marketplace.json` - Claude Code marketplace manifest.
 - `.cursor-plugin/marketplace.json` - Cursor marketplace manifest.
 - `.agents/plugins/marketplace.json` - Codex marketplace manifest.
@@ -38,6 +40,30 @@ WAVEDASH_SKILLS_SOURCE_DIR=/path/to/wvdsh/docs/skills npm run sync:skills
 
 GitHub Actions runs the same sync daily and commits changes when docs updates
 change the generated skill files.
+
+## MCP server
+
+Run the docs-only MCP server locally:
+
+```bash
+cd mcp
+npm install
+npm start
+```
+
+The endpoint is `http://localhost:3000/mcp`.
+
+Validate the Cloudflare Worker bundle without publishing:
+
+```bash
+npm run mcp:deploy:dry-run
+```
+
+Deploy the MCP Worker from an environment that provides Cloudflare credentials:
+
+```bash
+npm run mcp:deploy
+```
 
 ## License
 

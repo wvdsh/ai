@@ -1,0 +1,13 @@
+name = "wavedash-mcp"
+main = "src/worker.js"
+compatibility_date = "2026-06-29"
+
+[[routes]]
+pattern = "mcp.wavedash.com"
+custom_domain = true
+
+[observability]
+enabled = true
+
+[vars]
+WAVEDASH_DOCS_BASE_URL = "https://docs.wavedash.com"
