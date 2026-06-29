@@ -17,10 +17,10 @@ jobs:
       DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 24
           cache: npm
@@ -33,7 +33,7 @@ jobs:
         run: npm --prefix mcp ci
 
       - name: Install Doppler CLI
-        uses: dopplerhq/cli-action@v3
+        uses: dopplerhq/cli-action@v4
 
       - name: Validate Worker bundle
         run: doppler run -- npm run mcp:deploy:dry-run
