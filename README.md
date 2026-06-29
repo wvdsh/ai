@@ -43,6 +43,27 @@ change the generated skill files.
 
 ## MCP server
 
+The Wavedash remote MCP server is live at:
+
+```text
+https://mcp.wavedash.com/mcp
+```
+
+It is read-only and unauthenticated. It exposes public Wavedash docs, SDK
+guidance, engine setup help, and publishing checklists for agents.
+
+Add it to Codex:
+
+```bash
+codex mcp add wavedash --url https://mcp.wavedash.com/mcp
+```
+
+Check the configured server:
+
+```bash
+codex mcp get wavedash
+```
+
 Run the docs-only MCP server locally:
 
 ```bash

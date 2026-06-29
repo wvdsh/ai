@@ -65,10 +65,16 @@ npm run deploy:dry-run
 Deploy:
 
 ```bash
+npm run deploy
+```
+
+From the repo root, use:
+
+```bash
 npm run mcp:deploy
 ```
 
-The production MCP endpoint should be:
+The production MCP endpoint is:
 
 ```text
 https://mcp.wavedash.com/mcp
@@ -80,10 +86,23 @@ the hostname without a manual DNS record.
 
 ## Remote Client Testing
 
+Health/info endpoint:
+
+```text
+https://mcp.wavedash.com/
+```
+
 Cloudflare AI Playground can test the deployed endpoint directly:
 
 ```text
 https://mcp.wavedash.com/mcp
+```
+
+Codex can connect directly to the Streamable HTTP endpoint:
+
+```bash
+codex mcp add wavedash --url https://mcp.wavedash.com/mcp
+codex mcp get wavedash
 ```
 
 For Claude Desktop or other local MCP clients that expect stdio, use
