@@ -45,8 +45,21 @@ function textContent(text) {
         text,
       },
     ],
+    structuredContent: {
+      text,
+    },
   };
 }
+
+const readOnlyToolAnnotations = {
+  readOnlyHint: true,
+  openWorldHint: false,
+  destructiveHint: false,
+};
+
+const textOutputSchema = {
+  text: z.string().describe("Human-readable tool result text."),
+};
 
 export function createWavedashMcpServer() {
   const server = new McpServer({
@@ -60,6 +73,8 @@ export function createWavedashMcpServer() {
       title: "Get Wavedash Agent Workflow",
       description:
         "Return a concise end-to-end workflow for AI agents creating a browser game from scratch and preparing it for Wavedash upload. Read-only and unauthenticated; upload still happens through the Wavedash CLI or Developer Portal.",
+      annotations: readOnlyToolAnnotations,
+      outputSchema: textOutputSchema,
       inputSchema: {
         engine: z
           .string()
@@ -172,6 +187,8 @@ export function createWavedashMcpServer() {
       title: "Search Wavedash Docs",
       description:
         "Search official Wavedash docs for browser game development, SDK integration, engines, CLI, upload, and publishing. Read-only and unauthenticated.",
+      annotations: readOnlyToolAnnotations,
+      outputSchema: textOutputSchema,
       inputSchema: {
         query: z.string().min(1).describe("Search query, for example: sdk setup, multiplayer lobbies, unity webgl, build push."),
         limit: z.number().int().min(1).max(20).default(8).describe("Maximum number of results to return."),
@@ -189,6 +206,8 @@ export function createWavedashMcpServer() {
       title: "Get Wavedash Doc",
       description:
         "Fetch a full Wavedash docs page as Markdown by path or docs.wavedash.com URL. Read-only and unauthenticated.",
+      annotations: readOnlyToolAnnotations,
+      outputSchema: textOutputSchema,
       inputSchema: {
         path: z
           .string()
@@ -208,6 +227,8 @@ export function createWavedashMcpServer() {
       title: "Get Wavedash Quickstart",
       description:
         "Return the Wavedash setup path for a browser game, optionally including an engine and SDK features. Read-only and unauthenticated.",
+      annotations: readOnlyToolAnnotations,
+      outputSchema: textOutputSchema,
       inputSchema: {
         engine: z
           .string()
@@ -249,6 +270,8 @@ export function createWavedashMcpServer() {
       title: "Get Wavedash SDK Reference",
       description:
         "Fetch Wavedash SDK docs for a specific feature such as setup, multiplayer, achievements, leaderboards, cloud saves, UGC, players, events, or types. Read-only and unauthenticated.",
+      annotations: readOnlyToolAnnotations,
+      outputSchema: textOutputSchema,
       inputSchema: {
         topic: z
           .string()
@@ -269,6 +292,8 @@ export function createWavedashMcpServer() {
       title: "Get Wavedash Publishing Checklist",
       description:
         "Return Wavedash upload and publishing checklist guidance, optionally including an engine-specific docs page. Read-only and unauthenticated.",
+      annotations: readOnlyToolAnnotations,
+      outputSchema: textOutputSchema,
       inputSchema: {
         engine: z
           .string()
@@ -308,6 +333,8 @@ export function createWavedashMcpServer() {
       title: "Validate Wavedash Config",
       description:
         "Validate pasted wavedash.toml text for basic Wavedash CLI config issues. This does not read files; provide the config text as input.",
+      annotations: readOnlyToolAnnotations,
+      outputSchema: textOutputSchema,
       inputSchema: {
         toml: z.string().min(1).describe("Contents of wavedash.toml."),
       },
