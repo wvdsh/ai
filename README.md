@@ -11,6 +11,9 @@ The `mcp/` package contains a read-only, unauthenticated remote MCP server for
 public Wavedash docs. It does not access user accounts, local files, builds, or
 private Wavedash data.
 
+Provider plugins include Wavedash skills and, where supported, bundled config
+for the hosted remote MCP server.
+
 ## Layout
 
 - `skills/` - synced canonical skills for platforms that consume skills directly.

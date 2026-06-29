@@ -10,3 +10,6 @@ by `https://docs.wavedash.com/.well-known/skills/index.json`.
 
 Provider folders should only contain packaging files that are specific to that
 agent platform.
+
+Provider plugins can also include platform-specific MCP config for the hosted
+remote MCP server at `https://mcp.wavedash.com/mcp`.

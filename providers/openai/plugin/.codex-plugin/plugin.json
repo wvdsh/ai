@@ -1,6 +1,6 @@
 {
   "name": "wavedash",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Build browser games, integrate the Wavedash SDK, and prepare builds for upload and publishing.",
   "author": {
     "name": "Wavedash",
@@ -18,6 +18,7 @@
     "multiplayer"
   ],
   "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Wavedash",
     "shortDescription": "Build and publish browser games on Wavedash.",

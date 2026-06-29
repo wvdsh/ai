@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "wavedash": {
+      "type": "http",
+      "url": "https://mcp.wavedash.com/mcp"
+    }
+  }
+}
