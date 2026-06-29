@@ -52,17 +52,8 @@ https://mcp.wavedash.com/mcp
 It is read-only and unauthenticated. It exposes public Wavedash docs, SDK
 guidance, engine setup help, and publishing checklists for agents.
 
-Add it to Codex:
-
-```bash
-codex mcp add wavedash --url https://mcp.wavedash.com/mcp
-```
-
-Check the configured server:
-
-```bash
-codex mcp get wavedash
-```
+Remote MCP clients that support Streamable HTTP can connect directly to the
+endpoint above.
 
 Run the docs-only MCP server locally:
 

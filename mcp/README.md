@@ -98,12 +98,8 @@ Cloudflare AI Playground can test the deployed endpoint directly:
 https://mcp.wavedash.com/mcp
 ```
 
-Codex can connect directly to the Streamable HTTP endpoint:
-
-```bash
-codex mcp add wavedash --url https://mcp.wavedash.com/mcp
-codex mcp get wavedash
-```
+Remote MCP clients that support Streamable HTTP can connect directly to the
+same endpoint.
 
 For Claude Desktop or other local MCP clients that expect stdio, use
 `mcp-remote`:
