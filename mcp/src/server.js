@@ -4,10 +4,16 @@ import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/
 import { createMcpExpressApp } from "@modelcontextprotocol/sdk/server/express.js";
 import { createWavedashMcpServer, serverInfo } from "./createServer.js";
 
+const openAiAppsChallengeToken = "IFIllc5LKPW77e7VdTtkv2xtZgzWrK144a4gbfXA4Hg";
+
 const app = createMcpExpressApp();
 
 app.get("/", (_req, res) => {
   res.json(serverInfo());
+});
+
+app.get("/.well-known/openai-apps-challenge", (_req, res) => {
+  res.type("text/plain").send(openAiAppsChallengeToken);
 });
 
 app.post("/mcp", async (req, res) => {

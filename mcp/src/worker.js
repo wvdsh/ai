@@ -1,6 +1,8 @@
 import { WebStandardStreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js";
 import { createWavedashMcpServer, serverInfo } from "./createServer.js";
 
+const openAiAppsChallengeToken = "IFIllc5LKPW77e7VdTtkv2xtZgzWrK144a4gbfXA4Hg";
+
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET, POST, DELETE, OPTIONS",
@@ -32,6 +34,18 @@ function json(data, init = {}) {
   );
 }
 
+function text(data, init = {}) {
+  return withCors(
+    new Response(data, {
+      ...init,
+      headers: {
+        "content-type": "text/plain; charset=utf-8",
+        ...(init.headers || {}),
+      },
+    }),
+  );
+}
+
 function methodNotAllowed() {
   return withCors(
     new Response("Method Not Allowed", {
@@ -54,6 +68,10 @@ export default {
 
     if (url.pathname === "/" && request.method === "GET") {
       return json(serverInfo());
+    }
+
+    if (url.pathname === "/.well-known/openai-apps-challenge" && request.method === "GET") {
+      return text(openAiAppsChallengeToken);
     }
 
     if (url.pathname !== "/mcp") {
