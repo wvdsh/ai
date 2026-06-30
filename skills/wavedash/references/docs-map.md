@@ -22,6 +22,7 @@ Markdown form: `https://docs.wavedash.com/<slug>.md`
 - Leaderboards: https://docs.wavedash.com/sdk/leaderboards
 - Cloud saves: https://docs.wavedash.com/sdk/cloud-saves
 - User-generated content: https://docs.wavedash.com/sdk/ugc
+- Paid content: https://docs.wavedash.com/sdk/paid-content
 - Fullscreen: https://docs.wavedash.com/sdk/fullscreen
 - Audio: https://docs.wavedash.com/sdk/audio
 - Functions reference: https://docs.wavedash.com/sdk/functions
@@ -63,7 +64,7 @@ Common automation flags:
 - Upload a build: https://docs.wavedash.com/publishing/upload
 - Publish a build: https://docs.wavedash.com/publishing/publish
 - Metadata: https://docs.wavedash.com/publishing/metadata
-- Pricing: https://docs.wavedash.com/publishing/pricing
+- Monetization: https://docs.wavedash.com/publishing/monetization
 - Content guidelines: https://docs.wavedash.com/publishing/content-guidelines
 
 ## Game quality

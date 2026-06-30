@@ -5,7 +5,7 @@ Canonical docs:
 - Upload a build: https://docs.wavedash.com/publishing/upload
 - Publish a build: https://docs.wavedash.com/publishing/publish
 - Metadata: https://docs.wavedash.com/publishing/metadata
-- Pricing: https://docs.wavedash.com/publishing/pricing
+- Monetization: https://docs.wavedash.com/publishing/monetization
 - Content guidelines: https://docs.wavedash.com/publishing/content-guidelines
 
 ## Upload versus publish
@@ -38,7 +38,7 @@ Before launch, guide the user to prepare:
 - 3-5 gameplay screenshots
 - optional short trailer
 - accurate tags
-- pricing
+- monetization (optional Paid Content)
 
 ## Content rules
 
@@ -63,4 +63,4 @@ Also check:
 - Production build uploaded, not a dev artifact.
 - SDK init and requested SDK features work.
 - Game tested on Wavedash in a fresh browser.
-- Metadata, pricing, and content guidelines reviewed.
+- Metadata, monetization, and content guidelines reviewed.

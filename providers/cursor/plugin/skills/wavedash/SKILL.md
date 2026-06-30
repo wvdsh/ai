@@ -1,6 +1,6 @@
 ---
 name: wavedash
-description: Use when building, integrating, testing, uploading, publishing, or preparing a browser game for Wavedash, including CLI setup, Wavedash SDK features, multiplayer, achievements, leaderboards, cloud saves, player identity, user-generated content, store metadata, pricing, and content guidelines.
+description: Use when building, integrating, testing, uploading, publishing, or preparing a browser game for Wavedash, including CLI setup, Wavedash SDK features, multiplayer, achievements, leaderboards, cloud saves, player identity, user-generated content, store metadata, monetization, and content guidelines.
 ---
 
 # Wavedash
@@ -17,7 +17,7 @@ agent to the right docs and highlights traps agents commonly miss.
    Wavedash features.
 3. Read the relevant reference file before changing code or giving detailed
    instructions. Do not invent SDK methods, event names, constants, CLI flags,
-   pricing rules, or content-policy exceptions.
+   monetization rules, or content-policy exceptions.
 4. Prefer the CLI for local testing and scripted upload/publish workflows.
 5. Publish only when the user explicitly asks to make a build live.
 6. Use `WAVEDASH_TOKEN` and `--json --no-color --no-update-check` in CI,
@@ -31,8 +31,8 @@ agent to the right docs and highlights traps agents commonly miss.
 | Install CLI, authenticate, initialize, test locally, upload, publish | `references/cli.md` |
 | Add or fix SDK calls, player identity, load lifecycle, events | `references/sdk.md` |
 | Add multiplayer, lobbies, networking | `references/sdk.md` |
-| Add achievements, stats, leaderboards, cloud saves, UGC | `references/sdk.md` |
-| Prepare store page, metadata, pricing, content policy, launch checklist | `references/publishing.md` |
+| Add achievements, stats, leaderboards, cloud saves, UGC, paid content | `references/sdk.md` |
+| Prepare store page, metadata, monetization, content policy, launch checklist | `references/publishing.md` |
 | Fix launch-quality issues like shader stutter, Escape key, audio, memory | `references/game-quality.md` |
 | Determine engine-specific build/export steps | `references/engines.md` |
 | Need all docs URLs or raw Markdown links | `references/docs-map.md` |

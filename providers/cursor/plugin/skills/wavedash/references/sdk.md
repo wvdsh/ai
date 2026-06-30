@@ -55,6 +55,8 @@ for types and import ergonomics.
 - Leaderboards: read `sdk/leaderboards`.
 - Cloud saves: read `sdk/cloud-saves`.
 - User-generated content: read `sdk/ugc`.
+- Paid content: define offers in Developer Portal → Monetization, then read
+  `sdk/paid-content`.
 - Multiplayer: read `multiplayer/lobbies` first, then `multiplayer/networking`.
 - Events and exact method names: read `sdk/events`, `sdk/functions`, and
   `sdk/types`.
@@ -134,6 +136,16 @@ const ugc = await Wavedash.createUGCItem(
   Wavedash.UGCVisibility.PUBLIC,
   "ugc/levels/arena.wdc"
 );
+```
+
+Paid content:
+
+```javascript
+const owned = await Wavedash.isEntitled("full-version");
+if (!(owned.success && owned.data)) {
+  const result = await Wavedash.triggerPaywall("full-version");
+  if (result.success && result.data) unlockFullVersion();
+}
 ```
 
 ## Traps to avoid
