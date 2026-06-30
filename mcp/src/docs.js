@@ -21,7 +21,7 @@ const coreDocs = [
   "publishing/upload",
   "publishing/publish",
   "publishing/metadata",
-  "publishing/pricing",
+  "publishing/monetization",
   "publishing/content-guidelines",
   "tutorials/best-practices",
   "tutorials/shader-stutter",
@@ -32,13 +32,23 @@ const topicPages = {
   sdk: ["sdk/setup", "sdk/functions", "sdk/events", "sdk/types"],
   setup: ["sdk/setup", "getting-started/quickstart"],
   multiplayer: ["multiplayer/lobbies", "multiplayer/networking", "sdk/events", "sdk/types"],
+  lobby: ["multiplayer/lobbies", "sdk/events"],
   lobbies: ["multiplayer/lobbies", "sdk/events"],
   p2p: ["multiplayer/networking", "sdk/events", "sdk/types"],
+  achievement: ["sdk/achievements", "sdk/functions"],
   achievements: ["sdk/achievements", "sdk/functions"],
   stats: ["sdk/achievements", "sdk/functions"],
+  leaderboard: ["sdk/leaderboards", "sdk/functions"],
   leaderboards: ["sdk/leaderboards", "sdk/functions"],
+  "cloud-save": ["sdk/cloud-saves", "sdk/functions"],
   "cloud-saves": ["sdk/cloud-saves", "sdk/functions"],
+  save: ["sdk/cloud-saves", "sdk/functions"],
+  saves: ["sdk/cloud-saves", "sdk/functions"],
   ugc: ["sdk/ugc", "sdk/functions"],
+  "user-generated-content": ["sdk/ugc", "sdk/functions"],
+  paywall: ["sdk/paid-content", "publishing/monetization", "sdk/functions"],
+  "paid-content": ["sdk/paid-content", "publishing/monetization", "sdk/functions"],
+  monetization: ["publishing/monetization", "sdk/paid-content"],
   players: ["sdk/players", "sdk/functions"],
   publishing: ["publishing/upload", "publishing/publish", "cli/commands"],
   cli: ["cli/commands", "cli/configuration", "cli/authentication"],
@@ -47,14 +57,23 @@ const topicPages = {
 
 const featurePages = {
   multiplayer: ["multiplayer/lobbies", "multiplayer/networking"],
+  lobby: ["multiplayer/lobbies"],
   lobbies: ["multiplayer/lobbies"],
   p2p: ["multiplayer/networking"],
+  achievement: ["sdk/achievements"],
   achievements: ["sdk/achievements"],
   stats: ["sdk/achievements"],
+  leaderboard: ["sdk/leaderboards"],
   leaderboards: ["sdk/leaderboards"],
+  "cloud-save": ["sdk/cloud-saves"],
   "cloud-saves": ["sdk/cloud-saves"],
+  save: ["sdk/cloud-saves"],
   saves: ["sdk/cloud-saves"],
   ugc: ["sdk/ugc"],
+  "user-generated-content": ["sdk/ugc"],
+  paywall: ["sdk/paid-content", "publishing/monetization"],
+  "paid-content": ["sdk/paid-content", "publishing/monetization"],
+  monetization: ["publishing/monetization", "sdk/paid-content"],
   players: ["sdk/players"],
   identity: ["sdk/players"],
   publishing: ["publishing/upload", "publishing/publish"],
@@ -289,6 +308,21 @@ export function resolvePublishingPages(engine) {
   ];
   const enginePage = resolveEnginePage(engine);
   if (enginePage) pages.unshift(enginePage);
+  return unique(pages);
+}
+
+export function resolveImplementationPages(goal, engine, features = []) {
+  const pages = [
+    "getting-started/introduction",
+    "getting-started/concepts",
+    ...resolveQuickstartPages(engine, features),
+  ];
+
+  for (const token of String(goal || "").split(/[^a-z0-9@.+-]+/i)) {
+    pages.push(...(featurePages[normalizeKey(token)] || topicPages[normalizeKey(token)] || []));
+  }
+
+  pages.push("sdk/functions", "sdk/events", "sdk/types", "tutorials/best-practices");
   return unique(pages);
 }
 

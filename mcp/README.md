@@ -9,6 +9,9 @@ local files, API keys, or private Wavedash data.
 
 ## Tools
 
+- `wavedash_implementation_planner` - plan a Wavedash game implementation from
+  the user's goal, engine, and requested features before making architecture or
+  SDK claims.
 - `wavedash_search_docs` - search official Wavedash docs.
 - `wavedash_get_agent_workflow` - get a concise end-to-end workflow for
   creating a browser game and preparing it for Wavedash upload.

@@ -6,6 +6,7 @@ import {
   formatSearchResults,
   getDoc,
   listCoreDocs,
+  resolveImplementationPages,
   resolvePublishingPages,
   resolveQuickstartPages,
   resolveTopicPages,
@@ -16,6 +17,7 @@ import { formatConfigValidation, validateWavedashConfig } from "./config.js";
 export const serverVersion = "0.1.0";
 
 export const toolNames = [
+  "wavedash_implementation_planner",
   "wavedash_get_agent_workflow",
   "wavedash_search_docs",
   "wavedash_get_doc",
@@ -91,11 +93,88 @@ function cliInstallGuide() {
   ].join("\n");
 }
 
+function formatDocsList(pages) {
+  return pages.map((page) => `- ${page}: ${docsBaseUrl}/${page}`).join("\n");
+}
+
+function implementationPlannerText({ goal, engine, features }) {
+  const pages = resolveImplementationPages(goal, engine, features);
+  const requestedFeatures = features.length ? features.join(", ") : "none provided";
+  const engineText = engine || "not specified";
+
+  return [
+    "Wavedash implementation planner:",
+    "",
+    `Goal: ${goal}`,
+    `Engine/framework: ${engineText}`,
+    `Requested Wavedash features: ${requestedFeatures}`,
+    "",
+    "Use this planner before making architecture claims, selecting SDK features, or writing Wavedash integration code. Ground follow-up work in the docs listed below; if a claim is not supported by those docs, search or fetch docs before answering.",
+    "",
+    "Wavedash-supported surfaces to consider:",
+    "- Browser-playable static game builds with an HTML entrypoint.",
+    "- CLI and Developer Portal workflows for config, local sandbox testing, build upload, and publishing.",
+    "- SDK load lifecycle, player identity, events, typed function references, fullscreen, and audio helpers.",
+    "- SDK features documented in public docs: achievements and stats, leaderboards, cloud saves, user-generated content, paid content, multiplayer lobbies, lobby invites/messages/metadata, and P2P networking.",
+    "- Engine-specific browser export guidance for supported engines and custom web builds.",
+    "- Store page metadata, monetization setup, content guidelines, and launch-quality checks.",
+    "",
+    "Implementation order:",
+    "1. Confirm the game builds to static browser files and identify the output folder.",
+    "2. Read the engine guide and SDK setup docs before editing code.",
+    "3. Add `Wavedash.init()` when the game is ready to reveal; report load progress first if the game loads assets.",
+    "4. For each requested Wavedash feature, fetch the feature docs and the SDK functions/events/types references before using method names or constants.",
+    "5. Install and authenticate the Wavedash CLI, or route the human to the Developer Portal for manual authenticated steps.",
+    "6. Validate `wavedash.toml`, run `wavedash dev`, upload a build, and publish only after explicit confirmation.",
+    "",
+    "Boundaries:",
+    "- This MCP is read-only and unauthenticated; it cannot access local files, create games, sign in, create API keys, upload builds, publish builds, or change account data.",
+    "- Wavedash hosts browser game builds; it is not a general backend server runtime for arbitrary native services.",
+    "- Do not invent unsupported SDK methods, CLI flags, product limits, moderation exceptions, or feature gaps from model memory. Use `wavedash_search_docs`, `wavedash_get_doc`, or `wavedash_get_sdk_reference` when details are needed.",
+    "- If the user needs capabilities beyond current public docs, state that the docs do not establish support and suggest a third-party service only as an external addition.",
+    "",
+    "Recommended next MCP calls:",
+    "- `wavedash_get_quickstart` for engine setup and upload flow.",
+    "- `wavedash_get_sdk_reference` for each requested SDK feature.",
+    "- `wavedash_get_doc` for exact docs pages before using function names, event names, constants, or config fields.",
+    "- `wavedash_validate_config` after the user provides `wavedash.toml` contents.",
+    "",
+    "Relevant docs to read next:",
+    formatDocsList(pages),
+  ].join("\n");
+}
+
 export function createWavedashMcpServer() {
   const server = new McpServer({
     name: "wavedash",
     version: serverVersion,
   });
+
+  server.registerTool(
+    "wavedash_implementation_planner",
+    {
+      title: "Plan Wavedash Implementation",
+      description:
+        "Plan a Wavedash game implementation from the user's goal, engine, and requested features. Use this before making architecture claims, selecting SDK features, or writing Wavedash integration code. Read-only and unauthenticated.",
+      annotations: readOnlyToolAnnotations,
+      outputSchema: textOutputSchema,
+      inputSchema: {
+        goal: z
+          .string()
+          .min(1)
+          .describe("What the user wants to build or integrate, including the game type and Wavedash-related outcome."),
+        engine: z
+          .string()
+          .optional()
+          .describe("Optional engine/framework, for example phaser, unity, godot, three.js, react, rust, or custom."),
+        features: z
+          .array(z.string())
+          .default([])
+          .describe("Optional requested Wavedash features, for example multiplayer, achievements, leaderboards, cloud-saves, ugc, players, paid-content, upload, or publishing."),
+      },
+    },
+    async ({ goal, engine, features }) => textContent(implementationPlannerText({ goal, engine, features })),
+  );
 
   server.registerTool(
     "wavedash_get_agent_workflow",

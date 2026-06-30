@@ -15,12 +15,16 @@ agent to the right docs and highlights traps agents commonly miss.
    no game exists yet, create a small browser-playable game first.
 2. Identify the engine/framework, build command, output directory, and requested
    Wavedash features.
-3. Read the relevant reference file before changing code or giving detailed
+3. If the Wavedash MCP server is available, call
+   `wavedash_implementation_planner` before making architecture claims,
+   selecting SDK features, or writing Wavedash integration code. Treat the
+   planner's docs list and boundaries as the routing source for the next steps.
+4. Read the relevant reference file before changing code or giving detailed
    instructions. Do not invent SDK methods, event names, constants, CLI flags,
    monetization rules, or content-policy exceptions.
-4. Prefer the CLI for local testing and scripted upload/publish workflows.
-5. Publish only when the user explicitly asks to make a build live.
-6. Use `WAVEDASH_TOKEN` and `--json --no-color --no-update-check` in CI,
+5. Prefer the CLI for local testing and scripted upload/publish workflows.
+6. Publish only when the user explicitly asks to make a build live.
+7. Use `WAVEDASH_TOKEN` and `--json --no-color --no-update-check` in CI,
    cloud-agent, or other headless automation contexts.
 
 ## Routing
