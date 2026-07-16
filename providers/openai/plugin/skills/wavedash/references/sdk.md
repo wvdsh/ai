@@ -144,7 +144,10 @@ Paid content:
 const owned = await Wavedash.isEntitled("full-version");
 if (!(owned.success && owned.data)) {
   const result = await Wavedash.triggerPaywall("full-version");
-  if (result.success && result.data) unlockFullVersion();
+  if (result.success && result.data) {
+    await fetchPaidAssets();
+    unlockFullVersion();
+  }
 }
 ```
 
