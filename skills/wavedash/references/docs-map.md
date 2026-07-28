@@ -59,6 +59,12 @@ Common automation flags:
 --json --no-color --no-update-check
 ```
 
+## HTTP API
+
+- HTTP API overview: https://docs.wavedash.com/api
+- Authentication: https://docs.wavedash.com/api/authentication
+- Leaderboards: https://docs.wavedash.com/api/leaderboards
+
 ## Publishing
 
 - Upload a build: https://docs.wavedash.com/publishing/upload
