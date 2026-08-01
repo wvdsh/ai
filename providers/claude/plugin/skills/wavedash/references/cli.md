@@ -111,3 +111,44 @@ wavedash publish BUILD_ID --json --no-color --no-update-check
 
 After publishing, open the public game URL in a fresh browser and verify the
 uploaded build works end to end.
+
+## Reset playtest data
+
+Playtesting accumulates achievements, cloud saves, stats, leaderboard entries,
+paid-content entitlements, and UGC. Clearing them gives a clean slate for the
+next test run. This is destructive, so only run it when the user asks:
+
+```bash
+wavedash clear-playtest-data --force
+```
+
+Only sandbox data is affected — players of the published game are untouched.
+
+`--force` (alias `--yes`, short `-y`) is **required** here. The command refuses
+to run without confirmation when stdin is not a terminal, which is the usual
+case for an agent, and there is no prompt to answer.
+
+With no category flags it clears everything for every player. Narrow it before
+reaching for the broad form:
+
+```bash
+wavedash clear-playtest-data --achievements --stats --force
+wavedash clear-playtest-data --username somePlayer --cloud-saves --force
+```
+
+Categories: `--achievements`, `--cloud-saves`, `--stats`, `--leaderboards`,
+`--paid-content-entitlements`, `--user-generated-content`.
+
+Categories are not reconciled against each other, so a partial clear can leave
+a state normal play can't reach. Clearing `--achievements` without the stat that
+triggers them leaves the stat above its threshold while the achievement reads as
+locked, and it stays that way until the game writes that stat again — triggers
+are only re-evaluated on a stat write. Clear a stat-triggered achievement
+together with its stat, or use the no-flag form.
+
+Cloud saves are deleted remotely only. The browser keeps its local IndexedDB
+copy and can sync it back up, so don't report a save as gone on the strength of
+this command alone.
+
+A successful run means deletion was scheduled, not finished. Don't immediately
+assert the data is gone — re-read it if the user needs confirmation.
