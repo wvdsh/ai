@@ -41,6 +41,7 @@ Markdown form: `https://docs.wavedash.com/<slug>.md`
 - Installation: https://docs.wavedash.com/cli/installation
 - Authentication: https://docs.wavedash.com/cli/authentication
 - Configuration: https://docs.wavedash.com/cli/configuration
+- Environment variables: https://docs.wavedash.com/cli/environment-variables
 - Commands: https://docs.wavedash.com/cli/commands
 
 Common local workflow:

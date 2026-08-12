@@ -5,6 +5,7 @@ Canonical docs:
 - Installation: https://docs.wavedash.com/cli/installation
 - Authentication: https://docs.wavedash.com/cli/authentication
 - Configuration: https://docs.wavedash.com/cli/configuration
+- Environment variables: https://docs.wavedash.com/cli/environment-variables
 - Commands: https://docs.wavedash.com/cli/commands
 - Quickstart: https://docs.wavedash.com/getting-started/quickstart
 - CI/CD: https://docs.wavedash.com/tutorials/ci-cd
@@ -87,6 +88,39 @@ wavedash init --team-name "My Studio" --game-title "My Game" --upload-dir dist -
 
 Verify `wavedash.toml` has the right `game_id` and `upload_dir`. The upload
 directory must contain the built `index.html`.
+
+## Override config without editing wavedash.toml
+
+Every `wavedash.toml` field has a `WAVEDASH_*` counterpart that wins for one
+run. Prefer these over rewriting a file the user has committed:
+
+| Variable | Overrides |
+|----------|-----------|
+| `WAVEDASH_GAME_ID` | `game_id` |
+| `WAVEDASH_UPLOAD_DIR` | `upload_dir` |
+| `WAVEDASH_ENTRYPOINT` | `entrypoint` (engine-less builds only) |
+| `WAVEDASH_GODOT_VERSION` | `[godot].version` |
+| `WAVEDASH_UNITY_VERSION` | `[unity].version` |
+
+```bash
+WAVEDASH_GAME_ID=GAME_ID wavedash build push --json --no-color --no-update-check
+```
+
+Precedence is `--game-id`, then the variable, then the file. The CLI prints an
+`env override:` line for each override a command actually reads, so the output
+says where a value came from.
+
+A blank or whitespace-only value counts as unset and falls back to the file —
+don't export an empty variable expecting it to clear a field.
+
+With no `wavedash.toml` present, the CLI still runs as long as the variables
+supply what the command reads, which suits a scratch checkout. `WAVEDASH_TOKEN`
+alone does not count: it isn't a config field.
+
+Two combinations are refused by `dev` and `build push` rather than guessed:
+both engine version variables at once, and a version variable that names a
+different engine than the config declares. `WAVEDASH_ENTRYPOINT` is also
+refused when an engine is in play, because engine builds would ignore it.
 
 ## Test, upload, publish
 
