@@ -146,6 +146,25 @@ wavedash publish BUILD_ID --json --no-color --no-update-check
 After publishing, open the public game URL in a fresh browser and verify the
 uploaded build works end to end.
 
+## Inspect achievements
+
+List the achievements for the configured game before updating or deleting one:
+
+```bash
+wavedash achievement list
+```
+
+The default table includes the achievement IDs needed by `achievement update`
+and `achievement delete`. For automation, request a JSON array:
+
+```bash
+wavedash achievement list --json --no-color --no-update-check
+```
+
+Pass `--game-id GAME_ID` to select a game explicitly. Otherwise, game selection
+follows the usual precedence: `WAVEDASH_GAME_ID`, then `game_id` in
+`wavedash.toml`.
+
 ## Reset playtest data
 
 Playtesting accumulates achievements, cloud saves, stats, leaderboard entries,
