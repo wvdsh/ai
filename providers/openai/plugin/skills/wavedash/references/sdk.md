@@ -106,12 +106,13 @@ if (lb.success) {
 }
 ```
 
-Store a little context with a score by passing `metadata` as the fifth argument (after `ugcId`). Keys are strings, values are strings or numbers only — no booleans or nesting. Capped at 16 keys and 2048 bytes total; larger payloads belong in UGC. Every saved score replaces the entry's metadata wholesale, and omitting it clears what the previous score stored, so send the full map each time. It reads back on the upload response and on every entry list call.
+Store a little context with a score by passing `metadata` as the fifth argument (after `ugcId`). Keys are strings, values are strings, numbers, or booleans — no nesting, arrays, or null. Capped at 16 keys, 64-character keys, 256-character strings, and 2048 bytes total as JSON; larger payloads belong in UGC. Every saved score replaces the entry's metadata wholesale, and omitting it clears what the previous score stored, so send the full map each time. It reads back on the upload response and on every entry list call.
 
 ```javascript
 await Wavedash.uploadLeaderboardScore(lb.data.id, score, true, undefined, {
   character: "knight",
-  deaths: 3
+  deaths: 3,
+  noHit: true
 });
 
 const top = await Wavedash.listLeaderboardEntries(lb.data.id, 0, 10, false);
