@@ -1,3 +1,7 @@
 .DS_Store
 node_modules/
 .wrangler/
+
+# Generated OpenAI submission files stay local for manual upload.
+/chatgpt-app-submission.json
+/providers/openai/submission/

@@ -5,6 +5,16 @@ concurrency:
   cancel-in-progress: false
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - "mcp/src/**"
+      - "mcp/package.json"
+      - "mcp/package-lock.json"
+      - "mcp/wrangler.toml"
+      - "package.json"
+      - ".github/workflows/deploy-mcp-production.yml"
   workflow_dispatch:
 
 jobs:

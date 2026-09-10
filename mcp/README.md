@@ -53,6 +53,11 @@ docker run --rm -p 3000:3000 wavedash-mcp
 The Worker entrypoint is `src/worker.js`, configured by `wrangler.toml`.
 It serves a stateless Streamable HTTP MCP endpoint at `/mcp`.
 
+The `Deploy MCP to Production` GitHub Actions workflow deploys automatically
+on pushes to `main` that change MCP source, package dependencies, `wrangler.toml`,
+the root `package.json`, or the deployment workflow itself. Documentation and
+skill changes do not trigger deployment. Manual workflow runs remain available.
+
 Local Worker dev:
 
 ```bash

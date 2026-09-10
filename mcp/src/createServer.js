@@ -59,6 +59,13 @@ const readOnlyToolAnnotations = {
   destructiveHint: false,
 };
 
+// Public documentation fetches access the internet, even though they cannot
+// modify it. Locally computed guidance and config validation remain closed.
+const publicDocsToolAnnotations = {
+  ...readOnlyToolAnnotations,
+  openWorldHint: true,
+};
+
 const textOutputSchema = {
   text: z.string().describe("Human-readable tool result text."),
 };
@@ -289,7 +296,7 @@ export function createWavedashMcpServer() {
       title: "Search Wavedash Docs",
       description:
         "Search official Wavedash docs for browser game development, SDK integration, engines, CLI, upload, and publishing. Read-only and unauthenticated.",
-      annotations: readOnlyToolAnnotations,
+      annotations: publicDocsToolAnnotations,
       outputSchema: textOutputSchema,
       inputSchema: {
         query: z.string().min(1).describe("Search query, for example: sdk setup, multiplayer lobbies, unity webgl, build push."),
@@ -308,7 +315,7 @@ export function createWavedashMcpServer() {
       title: "Get Wavedash Doc",
       description:
         "Fetch a full Wavedash docs page as Markdown by path or docs.wavedash.com URL. Read-only and unauthenticated.",
-      annotations: readOnlyToolAnnotations,
+      annotations: publicDocsToolAnnotations,
       outputSchema: textOutputSchema,
       inputSchema: {
         path: z
@@ -329,7 +336,7 @@ export function createWavedashMcpServer() {
       title: "Get Wavedash Quickstart",
       description:
         "Return the Wavedash setup path for a browser game, optionally including an engine and SDK features. Read-only and unauthenticated.",
-      annotations: readOnlyToolAnnotations,
+      annotations: publicDocsToolAnnotations,
       outputSchema: textOutputSchema,
       inputSchema: {
         engine: z
@@ -376,7 +383,7 @@ export function createWavedashMcpServer() {
       title: "Get Wavedash SDK Reference",
       description:
         "Fetch Wavedash SDK docs for a specific feature such as setup, multiplayer, achievements, leaderboards, cloud saves, UGC, players, events, or types. Read-only and unauthenticated.",
-      annotations: readOnlyToolAnnotations,
+      annotations: publicDocsToolAnnotations,
       outputSchema: textOutputSchema,
       inputSchema: {
         topic: z
@@ -398,7 +405,7 @@ export function createWavedashMcpServer() {
       title: "Get Wavedash Publishing Checklist",
       description:
         "Return Wavedash upload and publishing checklist guidance, optionally including an engine-specific docs page. Read-only and unauthenticated.",
-      annotations: readOnlyToolAnnotations,
+      annotations: publicDocsToolAnnotations,
       outputSchema: textOutputSchema,
       inputSchema: {
         engine: z

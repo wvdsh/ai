@@ -74,7 +74,13 @@ Validate the Cloudflare Worker bundle without publishing:
 npm run mcp:deploy:dry-run
 ```
 
-Deploy the MCP Worker from an environment that provides Cloudflare credentials:
+Pushes to `main` automatically deploy the MCP Worker when MCP source,
+dependencies, Worker configuration, root package scripts, or the deployment
+workflow change. Documentation, skills, and submission files do not trigger a
+deployment. The `Deploy MCP to Production` GitHub Actions workflow also supports
+manual runs and loads deployment credentials through Doppler.
+
+Deploy the MCP Worker directly from an environment that provides Cloudflare credentials:
 
 ```bash
 npm run mcp:deploy

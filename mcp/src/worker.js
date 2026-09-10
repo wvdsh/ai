@@ -1,7 +1,7 @@
 import { WebStandardStreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js";
 import { createWavedashMcpServer, serverInfo } from "./createServer.js";
 
-const openAiAppsChallengeToken = "IFIllc5LKPW77e7VdTtkv2xtZgzWrK144a4gbfXA4Hg";
+const openAiAppsChallengeToken = "CRGL5eMXsjTRXQleqk-wGvpzsmTgGs3WAZ83-TcRqXs";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
