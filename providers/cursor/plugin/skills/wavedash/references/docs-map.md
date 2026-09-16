@@ -70,6 +70,7 @@ Common automation flags:
 
 - Upload a build: https://docs.wavedash.com/publishing/upload
 - Publish a build: https://docs.wavedash.com/publishing/publish
+- Embedding a game: https://docs.wavedash.com/publishing/embed
 - Metadata: https://docs.wavedash.com/publishing/metadata
 - Monetization: https://docs.wavedash.com/publishing/monetization
 - Content guidelines: https://docs.wavedash.com/publishing/content-guidelines
