@@ -9,18 +9,23 @@ local files, API keys, or private Wavedash data.
 
 ## Tools
 
-- `wavedash_implementation_planner` - plan a Wavedash game implementation from
-  the user's goal, engine, and requested features before making architecture or
-  SDK claims.
-- `wavedash_search_docs` - search official Wavedash docs.
-- `wavedash_get_agent_workflow` - get a concise end-to-end workflow for
-  creating a browser game and preparing it for Wavedash upload.
-- `wavedash_get_doc` - fetch a docs page as Markdown.
-- `wavedash_get_quickstart` - get setup guidance for an engine and optional SDK
-  features.
-- `wavedash_get_sdk_reference` - fetch SDK reference docs for a topic.
-- `wavedash_get_publishing_checklist` - get upload and publishing guidance.
-- `wavedash_validate_config` - validate pasted `wavedash.toml` text.
+Four orthogonal tools, so clients rarely have to choose between overlapping
+options:
+
+- `wavedash_implementation_planner` - plan and guide a Wavedash integration
+  from the user's goal, engine, and requested features. The `stage` argument
+  selects `plan` (architecture and reading order), `setup` (CLI install,
+  sign-in, SDK init, `wavedash.toml`, local testing), `features` (SDK
+  reference for the requested features), or `deploy` (upload and release
+  checklist). Returns ordered steps, boundaries, and the relevant docs pages
+  with content, as text and as structured output.
+- `search_wavedash_docs` - search official Wavedash docs.
+- `get_wavedash_doc` - fetch a docs page as Markdown.
+- `validate_wavedash_config` - validate `wavedash.toml` text, including
+  single-line or fenced input pasted from chat.
+
+Engine, topic, and feature pages are resolved at runtime from the docs site's
+search index, so new docs pages need no change here.
 
 ## Run Locally
 

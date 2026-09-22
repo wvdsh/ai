@@ -449,7 +449,7 @@ export function formatSearchResults(results) {
 
 function trimMarkdown(markdown, maxChars = 3200) {
   if (markdown.length <= maxChars) return markdown;
-  return `${markdown.slice(0, maxChars).trim()}\n\n[Truncated. Use wavedash_get_doc for the full page.]`;
+  return `${markdown.slice(0, maxChars).trim()}\n\n[Truncated. Use get_wavedash_doc for the full page.]`;
 }
 
 // Fetch several pages as one Markdown bundle. A single missing page is
@@ -469,7 +469,7 @@ export async function buildDocBundle(slugs, maxCharsPerDoc = 2200) {
 
   if (docs.length === 0) {
     throw new Error(
-      `Could not load any Wavedash docs pages. ${failures.join("; ")}. Try wavedash_search_docs or the docs index at ${docsBaseUrl}.`,
+      `Could not load any Wavedash docs pages. ${failures.join("; ")}. Try search_wavedash_docs or the docs index at ${docsBaseUrl}.`,
     );
   }
 

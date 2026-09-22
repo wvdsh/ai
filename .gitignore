@@ -2,6 +2,7 @@
 node_modules/
 .wrangler/
 
-# Generated OpenAI submission files stay local for manual upload.
+# Store submission assets stay local; never publish them to the public repo.
+/mcp/submission/
 /chatgpt-app-submission.json
 /providers/openai/submission/

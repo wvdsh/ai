@@ -10,8 +10,19 @@ function parseScalar(rawValue) {
   return value;
 }
 
+// Chat clients often paste config as a single line or inside a Markdown code
+// fence. Strip fences and break "k = v k2 = v2" runs back into lines so the
+// validator sees the same fields the user has in their file.
+function normalizeConfigText(tomlText) {
+  return String(tomlText || "")
+    .replace(/^\s*```[a-z]*\s*$/gim, "")
+    .replace(/(["'\]]|\b(?:true|false|\d+))[ \t]+(?=[A-Za-z0-9_-]+[ \t]*=)/g, "$1\n")
+    .replace(/(["'\]])[ \t]+(?=\[[A-Za-z0-9_-]+\])/g, "$1\n")
+    .trim();
+}
+
 export function validateWavedashConfig(tomlText) {
-  const text = String(tomlText || "").trim();
+  const text = normalizeConfigText(tomlText);
   const issues = [];
   const warnings = [];
   const fields = {};
