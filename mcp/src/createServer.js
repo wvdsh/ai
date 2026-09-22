@@ -2,6 +2,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import * as z from "zod/v4";
 import {
   buildDocBundle,
+  defaultTopicPages,
   docsBaseUrl,
   formatSearchResults,
   getDoc,
@@ -104,8 +105,8 @@ function formatDocsList(pages) {
   return pages.map((page) => `- ${page}: ${docsBaseUrl}/${page}`).join("\n");
 }
 
-function implementationPlannerText({ goal, engine, features }) {
-  const pages = resolveImplementationPages(goal, engine, features);
+async function implementationPlannerText({ goal, engine, features }) {
+  const pages = await resolveImplementationPages(goal, engine, features);
   const requestedFeatures = features.length ? features.join(", ") : "none provided";
   const engineText = engine || "not specified";
 
@@ -180,7 +181,7 @@ export function createWavedashMcpServer() {
           .describe("Optional requested Wavedash features, for example multiplayer, achievements, leaderboards, cloud-saves, ugc, players, paid-content, upload, or publishing."),
       },
     },
-    async ({ goal, engine, features }) => textContent(implementationPlannerText({ goal, engine, features })),
+    async ({ goal, engine, features }) => textContent(await implementationPlannerText({ goal, engine, features })),
   );
 
   server.registerTool(
@@ -203,7 +204,7 @@ export function createWavedashMcpServer() {
       },
     },
     async ({ engine, features }) => {
-      const pages = resolveQuickstartPages(engine, features);
+      const pages = await resolveQuickstartPages(engine, features);
       const links = pages.map((page) => `- ${page}: ${docsBaseUrl}/${page}`).join("\n");
       return textContent(
         [
@@ -350,7 +351,7 @@ export function createWavedashMcpServer() {
       },
     },
     async ({ engine, features }) => {
-      const pages = resolveQuickstartPages(engine, features);
+      const pages = await resolveQuickstartPages(engine, features);
       const links = pages.map((page) => `- ${page}: ${docsBaseUrl}/${page}`).join("\n");
       const docs = await buildDocBundle(pages, 1800);
       return textContent(
@@ -393,9 +394,22 @@ export function createWavedashMcpServer() {
       },
     },
     async ({ topic }) => {
-      const pages = resolveTopicPages(topic);
+      let pages = await resolveTopicPages(topic);
+      let note = "";
+
+      if (pages.length === 0) {
+        const results = await searchDocs(topic, 4).catch(() => []);
+        pages = results.map((result) => result.slug);
+        if (pages.length) {
+          note = `No exact SDK topic matched "${topic}". Showing the closest Wavedash docs pages from search.\n\n`;
+        } else {
+          pages = defaultTopicPages();
+          note = `No Wavedash docs matched "${topic}". Showing the core SDK reference pages instead.\n\n`;
+        }
+      }
+
       const docs = await buildDocBundle(pages, 2600);
-      return textContent(docs);
+      return textContent(`${note}${docs}`);
     },
   );
 
@@ -415,7 +429,7 @@ export function createWavedashMcpServer() {
       },
     },
     async ({ engine }) => {
-      const pages = resolvePublishingPages(engine);
+      const pages = await resolvePublishingPages(engine);
       const links = pages.map((page) => `- ${page}: ${docsBaseUrl}/${page}`).join("\n");
       const docs = await buildDocBundle(pages, 1600);
       return textContent(
