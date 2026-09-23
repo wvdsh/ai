@@ -24,7 +24,6 @@ Markdown form: `https://docs.wavedash.com/<slug>.md`
 - User-generated content: https://docs.wavedash.com/sdk/ugc
 - Paid content: https://docs.wavedash.com/sdk/paid-content
 - Fullscreen: https://docs.wavedash.com/sdk/fullscreen
-- Audio: https://docs.wavedash.com/sdk/audio
 - Functions reference: https://docs.wavedash.com/sdk/functions
 - Events reference: https://docs.wavedash.com/sdk/events
 - Types reference: https://docs.wavedash.com/sdk/types
