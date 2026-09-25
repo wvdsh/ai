@@ -9,8 +9,9 @@ engine guide exists, use the custom web build guide.
 
 ## General rule
 
-Wavedash needs a folder of browser-playable static files with an entrypoint
-such as `index.html`. `wavedash.toml` should point `upload_dir` to that built
+Wavedash needs a folder of browser-playable static files. Engine-less builds
+need an entrypoint (default `index.html`); Godot/Unity exports and
+jsdos/ruffle/renpy configs boot through Wavedash's own loader. `wavedash.toml` should point `upload_dir` to that built
 folder.
 
 Common output directories:

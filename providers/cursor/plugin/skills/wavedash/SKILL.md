@@ -24,8 +24,9 @@ agent to the right docs and highlights traps agents commonly miss.
    monetization rules, or content-policy exceptions.
 5. Prefer the CLI for local testing and scripted upload/publish workflows.
 6. Publish only when the user explicitly asks to make a build live.
-7. Use `WAVEDASH_TOKEN` and `--json --no-color --no-update-check` in CI,
-   cloud-agent, or other headless automation contexts.
+7. Use `WAVEDASH_TOKEN` in CI, cloud-agent, or other headless automation
+   contexts, and pass `--json` where a command supports it (`auth status`,
+   `team list`, `project list`, `achievement list`).
 
 ## Routing
 

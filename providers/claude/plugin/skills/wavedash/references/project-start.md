@@ -41,7 +41,8 @@ production build to `dist`.
 
 4. Add requested Wavedash features from `references/sdk.md`.
 5. Add a production build script and confirm the output contains `index.html`.
-6. Run `wavedash init` or scripted init, then `wavedash dev`.
+6. Run `wavedash init` (interactive), or `wavedash project create` plus a
+   hand-written `wavedash.toml`, then `wavedash dev`.
 7. Upload only after local build and sandbox testing pass.
 8. Publish only when the user explicitly asks.
 

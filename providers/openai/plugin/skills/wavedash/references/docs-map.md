@@ -53,11 +53,8 @@ wavedash build push
 wavedash publish <BUILD_ID>
 ```
 
-Common automation flags:
-
-```bash
---json --no-color --no-update-check
-```
+`--json` is available on `auth status`, `team list`, `project list`, and
+`achievement list`. `publish` needs `--yes` when run without a terminal.
 
 ## HTTP API
 

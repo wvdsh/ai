@@ -51,48 +51,56 @@ CI, cloud agents, or headless environments:
 
 ```bash
 export WAVEDASH_TOKEN=wd_...
-wavedash auth status --json --no-color --no-update-check
+wavedash auth status --json
 ```
 
 Use `WAVEDASH_TOKEN` for automation. Do not ask an agent to complete browser
 login in a headless environment. To store a token without exposing it in shell
-history, pipe it through stdin when supported:
+history, pipe it through stdin:
 
 ```bash
-printf '%s' "$WAVEDASH_TOKEN" | wavedash auth login --token-stdin --no-color --no-update-check
+printf '%s' "$WAVEDASH_TOKEN" | wavedash auth login --token-stdin
 ```
 
-If an installed CLI rejects `--json`, `--no-color`, `--no-update-check`, or
-`--token-stdin`, it is older than the agent-friendly CLI. Retry the command
-without the unsupported flag and tell the user to update the CLI.
+The only global flag besides `--help` / `--version` is `--verbose`. `--json` exists only on `auth status`,
+`team list`, `project list`, and `achievement list` — don't add it to other
+commands.
 
 ## Initialize the project
 
-Interactive local setup:
+Interactive local setup (prompts only — it takes no flags, so an agent without
+a terminal can't drive it):
 
 ```bash
 wavedash init
 ```
 
-Scripted setup with an existing team and game:
+Scripted setup: find or create a team, create the game, then write
+`wavedash.toml` yourself:
 
 ```bash
-wavedash init --team-id TEAM_ID --game-id GAME_ID --upload-dir dist --engine custom --force --json
+wavedash team list --json            # or: wavedash team create --name "My Studio"
+wavedash project create --title "My Game" --team-id TEAM_ID
 ```
 
-Scripted setup that creates a team and game:
-
-```bash
-wavedash init --team-name "My Studio" --game-title "My Game" --upload-dir dist --engine custom --force --json
+```toml
+game_id = "GAME_ID"
+upload_dir = "dist"
+entrypoint = "index.html"
 ```
 
-Verify `wavedash.toml` has the right `game_id` and `upload_dir`. The upload
-directory must contain the built `index.html`.
+Instead of writing the file, you can export `WAVEDASH_GAME_ID` and
+`WAVEDASH_UPLOAD_DIR` (see below).
+
+Verify `wavedash.toml` has the right `game_id` and `upload_dir`. For engine-less
+(custom HTML/JS) builds the upload directory must contain the entrypoint
+(default `index.html`); Godot/Unity exports and jsdos/ruffle/renpy configs boot
+through Wavedash's own loader.
 
 ## Override config without editing wavedash.toml
 
-Every `wavedash.toml` field has a `WAVEDASH_*` counterpart that wins for one
-run. Prefer these over rewriting a file the user has committed:
+These `wavedash.toml` fields have a `WAVEDASH_*` counterpart that wins for one
+run (other fields have none). Prefer these over rewriting a file the user has committed:
 
 | Variable | Overrides |
 |----------|-----------|
@@ -103,7 +111,7 @@ run. Prefer these over rewriting a file the user has committed:
 | `WAVEDASH_UNITY_VERSION` | `[unity].version` |
 
 ```bash
-WAVEDASH_GAME_ID=GAME_ID wavedash build push --json --no-color --no-update-check
+WAVEDASH_GAME_ID=GAME_ID wavedash build push
 ```
 
 Precedence is `--game-id`, then the variable, then the file. The CLI prints an
@@ -133,14 +141,15 @@ wavedash dev
 Upload a build:
 
 ```bash
-wavedash build push --json --no-color --no-update-check
+wavedash build push
 ```
 
-The upload command returns or prints a build ID. Publishing makes that build
-live for players, so only do it when the user asks:
+The upload prints a build ID and a playtest URL. Publishing makes that build
+live for players, so only do it when the user asks. Without a terminal,
+`publish` refuses unless you pass `--yes`:
 
 ```bash
-wavedash publish BUILD_ID --json --no-color --no-update-check
+wavedash publish BUILD_ID --yes
 ```
 
 After publishing, open the public game URL in a fresh browser and verify the
@@ -158,7 +167,7 @@ The default table includes the achievement IDs needed by `achievement update`
 and `achievement delete`. For automation, request a JSON array:
 
 ```bash
-wavedash achievement list --json --no-color --no-update-check
+wavedash achievement list --json
 ```
 
 Pass `--game-id GAME_ID` to select a game explicitly. Otherwise, game selection

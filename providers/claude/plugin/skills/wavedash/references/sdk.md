@@ -80,17 +80,20 @@ Player:
 const user = Wavedash.getUser();
 const userId = Wavedash.getUserId();
 const username = Wavedash.getUsername();
-const jwt = await Wavedash.getUserJwt();
+const jwtResponse = await Wavedash.getUserJwt();
+const jwt = jwtResponse.success ? jwtResponse.data : null;
 ```
 
 Stats and achievements:
 
 ```javascript
 await Wavedash.requestStats();
-const kills = Wavedash.getStat("total_kills") || 0;
+// getStat returns 0, and setStat/setAchievement return false and drop the
+// write, until stats AND achievements have loaded — check the return value.
+const kills = Wavedash.getStat("total_kills");
 Wavedash.setStat("total_kills", kills + 1, true);
 Wavedash.setAchievement("first_blood", true);
-await Wavedash.storeStats();
+Wavedash.storeStats(); // synchronous, returns boolean
 ```
 
 Leaderboards:
@@ -109,23 +112,28 @@ if (lb.success) {
 Store a little context with a score by passing `metadata` as the fifth argument (after `ugcId`). Keys are strings, values are strings, numbers, or booleans — no nesting, arrays, or null. Capped at 16 keys, 64-character keys, 256-character strings, and 2048 bytes total as JSON; larger payloads belong in UGC. Every saved score replaces the entry's metadata wholesale, and omitting it clears what the previous score stored, so send the full map each time. It reads back on the upload response and on every entry list call.
 
 ```javascript
-await Wavedash.uploadLeaderboardScore(lb.data.id, score, true, undefined, {
-  character: "knight",
-  deaths: 3,
-  noHit: true
-});
+if (lb.success) {
+  await Wavedash.uploadLeaderboardScore(lb.data.id, score, true, undefined, {
+    character: "knight",
+    deaths: 3,
+    noHit: true
+  });
 
-const top = await Wavedash.listLeaderboardEntries(lb.data.id, 0, 10, false);
-top.data.forEach(e => console.log(e.score, e.metadata?.character));
+  const top = await Wavedash.listLeaderboardEntries(lb.data.id, 0, 10, false);
+  if (top.success) {
+    top.data.forEach(e => console.log(e.score, e.metadata?.character));
+  }
+}
 ```
 
 Cloud saves:
 
 ```javascript
+const bytes = new TextEncoder().encode(JSON.stringify(saveData));
 await Wavedash.writeLocalFile("saves/slot1.json", bytes);
 await Wavedash.uploadRemoteFile("saves/slot1.json");
 await Wavedash.downloadRemoteFile("saves/slot1.json");
-const bytes = await Wavedash.readLocalFile("saves/slot1.json");
+const loaded = await Wavedash.readLocalFile("saves/slot1.json"); // Uint8Array | null
 ```
 
 Lobbies and P2P:
@@ -154,13 +162,21 @@ const ugc = await Wavedash.createUGCItem(
 Paid content:
 
 ```javascript
-const owned = await Wavedash.isEntitled("full-version");
-if (!(owned.success && owned.data)) {
-  const result = await Wavedash.triggerPaywall("full-version");
-  if (result.success && result.data) {
+// Unlock in ENTITLEMENTS_GRANTED: it fires for paywall purchases and for
+// purchases made outside the game (another tab, the store page).
+Wavedash.on(Wavedash.Events.ENTITLEMENTS_GRANTED, async ({ contentIdentifiers }) => {
+  if (contentIdentifiers.includes("full-version")) {
     await fetchPaidAssets();
     unlockFullVersion();
   }
+});
+
+const owned = await Wavedash.isEntitled("full-version");
+if (owned.success && owned.data) {
+  await fetchPaidAssets();
+  unlockFullVersion();
+} else {
+  await Wavedash.triggerPaywall("full-version");
 }
 ```
 

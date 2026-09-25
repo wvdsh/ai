@@ -18,8 +18,8 @@ live.
 CLI flow:
 
 ```bash
-wavedash build push --json --no-color --no-update-check
-wavedash publish BUILD_ID --json --no-color --no-update-check
+wavedash build push
+wavedash publish BUILD_ID --yes   # --yes is required without a terminal
 ```
 
 Developer Portal flow:
@@ -34,12 +34,15 @@ Developer Portal flow:
 Before launch, guide the user to prepare:
 
 - clear title
-- concise description with a one-sentence hook
-- cover art that reads as the game at a glance
-- 3-5 gameplay screenshots
-- optional short trailer
-- accurate tags
+- description of at least 80 characters, opening with a one-sentence hook
+  (required)
+- 16:9 cover art (at least 250×140) that shows the title and no other text
+  (required)
+- a preview video: 16:9 MP4/WebM/MOV, 5 s–5 min, up to 200 MB (required)
+- at least one tag, input method, and supported language (required)
 - monetization (optional Paid Content)
+
+There are no screenshot or trailer fields on the store listing.
 
 ## Content rules
 
@@ -49,14 +52,17 @@ Games must not include or promote:
 - real-money gambling
 - hateful targeting based on protected characteristics
 - impersonation of other games
-- malware or browser-crashing behavior
+- browser-crashing behavior
+
+Games using Paid Content must offer free gameplay before any paywall. Every
+game's title must be primarily in Latin script.
 
 Also check:
 
 - game loads reliably
 - browser tab does not crash
 - expected progress is saved
-- cover art is square, includes the game title, and does not include extra text
+- cover art is 16:9, includes the game title, and does not include extra text
 
 ## Final launch check
 
