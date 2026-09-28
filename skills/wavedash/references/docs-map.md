@@ -7,6 +7,7 @@ Markdown form: `https://docs.wavedash.com/<slug>.md`
 
 ## Start and concepts
 
+- Getting started: https://docs.wavedash.com/getting-started
 - Quickstart: https://docs.wavedash.com/getting-started/quickstart
 - Introduction: https://docs.wavedash.com/getting-started/introduction
 - Concepts: https://docs.wavedash.com/getting-started/concepts
@@ -64,15 +65,29 @@ wavedash publish <BUILD_ID>
 
 ## Publishing
 
+- Publishing overview: https://docs.wavedash.com/publishing
 - Upload a build: https://docs.wavedash.com/publishing/upload
 - Publish a build: https://docs.wavedash.com/publishing/publish
 - Embedding a game: https://docs.wavedash.com/publishing/embed
 - Metadata: https://docs.wavedash.com/publishing/metadata
 - Monetization: https://docs.wavedash.com/publishing/monetization
 - Content guidelines: https://docs.wavedash.com/publishing/content-guidelines
+- Creator Fund: https://docs.wavedash.com/publishing/creator-fund
+
+## Platform
+
+- Platform overview: https://docs.wavedash.com/platform
+- Cross-origin isolation: https://docs.wavedash.com/platform/cross-origin-isolation
+
+## Agents and AI tooling
+
+- Agents: https://docs.wavedash.com/agents
+- MCP server: https://docs.wavedash.com/mcp
+- Agent skill: https://docs.wavedash.com/skills
 
 ## Game quality
 
+- Tutorials: https://docs.wavedash.com/tutorials
 - Best practices: https://docs.wavedash.com/tutorials/best-practices
 - Shader stutter: https://docs.wavedash.com/tutorials/shader-stutter
 - CI/CD: https://docs.wavedash.com/tutorials/ci-cd

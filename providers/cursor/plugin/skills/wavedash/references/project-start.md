@@ -48,7 +48,7 @@ production build to `dist`.
 
 ## Feature-first scaffolds
 
-- Achievements/stats: create identifiers first, then wire `requestStats`,
+- Achievements/stats: create identifiers first (Portal, or `wavedash stat create` / `wavedash achievement create` — see `references/cli.md`), then wire `requestStats`,
   `getStat`, `setStat`, `setAchievement`, and `storeStats`.
 - Leaderboards: resolve a leaderboard name to an ID with `getLeaderboard` or
   `getOrCreateLeaderboard`, then upload scores with `uploadLeaderboardScore`.

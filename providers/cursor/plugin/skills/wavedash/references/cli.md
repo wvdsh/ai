@@ -62,7 +62,7 @@ history, pipe it through stdin:
 printf '%s' "$WAVEDASH_TOKEN" | wavedash auth login --token-stdin
 ```
 
-The only global flag besides `--help` / `--version` is `--verbose`. `--json` exists only on `auth status`,
+The only global flag besides `--help` is `--verbose` (`--version` works on the bare `wavedash` command only). `--json` exists only on `auth status`,
 `team list`, `project list`, and `achievement list` — don't add it to other
 commands.
 
@@ -94,8 +94,9 @@ Instead of writing the file, you can export `WAVEDASH_GAME_ID` and
 
 Verify `wavedash.toml` has the right `game_id` and `upload_dir`. For engine-less
 (custom HTML/JS) builds the upload directory must contain the entrypoint
-(default `index.html`); Godot/Unity exports and jsdos/ruffle/renpy configs boot
-through Wavedash's own loader.
+(default `index.html`). Godot/Unity exports and jsdos/ruffle configs boot
+through Wavedash's own loader; `[renpy]` builds boot the `index.html` in
+`upload_dir`.
 
 ## Override config without editing wavedash.toml
 
@@ -154,6 +155,26 @@ wavedash publish BUILD_ID --yes
 
 After publishing, open the public game URL in a fresh browser and verify the
 uploaded build works end to end.
+
+## Define stats and achievements
+
+Create the identifiers your code uses before calling `setStat` /
+`setAchievement` — unknown identifiers are silently rejected. Portal or CLI both
+work; the CLI suits agents:
+
+```bash
+wavedash stat create --identifier KILLS_TOTAL --name "Total Kills"
+wavedash achievement create --identifier FIRST_WIN --title "First Win" \
+  --description "Win your first match."
+# stat-triggered: add --triggered-by-stat-id <STAT_ID> --threshold <N>
+# also: --secret, --image <PATH>
+```
+
+`stat update|delete --id <STAT_ID>` and `achievement update|delete --id
+<ACHIEVEMENT_ID>` edit or remove them (`delete` refuses while player progress
+exists unless you pass `--force`, which deletes that progress too). Other commands: `team create --name "..."`, `auth logout`, and
+`update` (self-update the CLI). Full reference:
+https://docs.wavedash.com/cli/commands
 
 ## Inspect achievements
 
