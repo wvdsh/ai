@@ -24,6 +24,8 @@ Markdown form: `https://docs.wavedash.com/<slug>.md`
 - Cloud saves: https://docs.wavedash.com/sdk/cloud-saves
 - User-generated content: https://docs.wavedash.com/sdk/ugc
 - Paid content: https://docs.wavedash.com/sdk/paid-content
+- Durables: https://docs.wavedash.com/sdk/paid-content/durables
+- Consumables: https://docs.wavedash.com/sdk/paid-content/consumables
 - Fullscreen: https://docs.wavedash.com/sdk/fullscreen
 - Functions reference: https://docs.wavedash.com/sdk/functions
 - Events reference: https://docs.wavedash.com/sdk/events
@@ -62,6 +64,8 @@ wavedash publish <BUILD_ID>
 - HTTP API overview: https://docs.wavedash.com/api
 - Authentication: https://docs.wavedash.com/api/authentication
 - Leaderboards: https://docs.wavedash.com/api/leaderboards
+- Purchases: https://docs.wavedash.com/api/purchases
+- Webhooks: https://docs.wavedash.com/api/webhooks
 
 ## Publishing
 

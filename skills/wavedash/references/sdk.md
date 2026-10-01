@@ -56,7 +56,10 @@ for types and import ergonomics.
 - Cloud saves: read `sdk/cloud-saves`.
 - User-generated content: read `sdk/ugc`.
 - Paid content: define offers in Developer Portal → Monetization, then read
-  `sdk/paid-content`.
+  `sdk/paid-content/durables` (one-time unlocks that gate build files)
+  or `sdk/paid-content/consumables` (repeatable purchases the game fulfills,
+  and receipt verification). Backend purchase handling: `api/webhooks` and
+  `api/purchases`.
 - Multiplayer: read `multiplayer/lobbies` first, then `multiplayer/networking`.
 - Events and exact method names: read `sdk/events`, `sdk/functions`, and
   `sdk/types`.
@@ -162,13 +165,22 @@ const ugc = await Wavedash.createUGCItem(
 Paid content:
 
 ```javascript
-// Unlock in ENTITLEMENTS_GRANTED: it fires for paywall purchases and for
-// purchases made outside the game (another tab, the store page).
-Wavedash.on(Wavedash.Events.ENTITLEMENTS_GRANTED, async ({ contentIdentifiers }) => {
-  if (contentIdentifiers.includes("full-version")) {
-    await fetchPaidAssets();
-    unlockFullVersion();
+// Unlock in PURCHASE_COMPLETED: it fires for paywall purchases, for purchases
+// made outside the game (another tab, the store page), and at launch for every
+// consumable not yet fulfilled. ENTITLEMENTS_GRANTED is deprecated.
+Wavedash.on(Wavedash.Events.PURCHASE_COMPLETED, async (purchase) => {
+  if (purchase.type === Wavedash.PurchaseType.DURABLE) {
+    if (purchase.contentIdentifier === "full-version") {
+      await fetchPaidAssets();
+      unlockFullVersion();
+    }
+    return;
   }
+  // Consumable: grant once per purchaseId, save, then fulfill so it stops
+  // being redelivered. Games with a backend should forward purchase.receiptJwt
+  // there instead and grant after verifying it.
+  await grantItemOnce(purchase.purchaseId, purchase.contentIdentifier);
+  await Wavedash.fulfillPurchase(purchase.purchaseId);
 });
 
 const owned = await Wavedash.isEntitled("full-version");
