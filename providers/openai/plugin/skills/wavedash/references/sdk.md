@@ -139,6 +139,8 @@ await Wavedash.downloadRemoteFile("saves/slot1.json");
 const loaded = await Wavedash.readLocalFile("saves/slot1.json"); // Uint8Array | null
 ```
 
+Uploads are rate limited per player per game (30/minute, 300/hour). Write locally as often as needed, but only call `uploadRemoteFile` at key points: level end, checkpoint, manual save, quit. Not on every autosave.
+
 Lobbies and P2P:
 
 ```javascript
