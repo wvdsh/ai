@@ -12,27 +12,13 @@ Canonical docs:
 
 ## Install the CLI
 
-If `wavedash --version` is unavailable, guide the user to install the CLI.
+If `wavedash --version` is unavailable, do not install anything yourself. Point
+the user to the official installation guide, which covers macOS, Linux, WSL,
+Homebrew, and Windows:
 
-macOS, Linux, WSL:
+https://docs.wavedash.com/cli/installation
 
-```bash
-curl -fsSL https://wavedash.com/cli/install.sh | sh
-```
-
-Homebrew:
-
-```bash
-brew install wvdsh/tap/wavedash
-```
-
-Windows PowerShell:
-
-```powershell
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass; irm https://wavedash.com/cli/install.ps1 | iex
-```
-
-Verify:
+After the user installs it, verify:
 
 ```bash
 wavedash --version

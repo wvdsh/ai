@@ -34,9 +34,7 @@ Wavedash.init();
 
 For TypeScript/editor types:
 
-```bash
-npm install @wvdsh/sdk-js
-```
+Add the `@wvdsh/sdk-js` package to the project as a dependency with the project's package manager (see https://docs.wavedash.com/sdk/setup).
 
 ```typescript
 import Wavedash from "@wvdsh/sdk-js";
