@@ -82,6 +82,7 @@ wavedash publish <BUILD_ID>
 
 - Platform overview: https://docs.wavedash.com/platform
 - Cross-origin isolation: https://docs.wavedash.com/platform/cross-origin-isolation
+- WebXR: https://docs.wavedash.com/platform/webxr
 
 ## Agents and AI tooling
 
