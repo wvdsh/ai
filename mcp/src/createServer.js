@@ -233,7 +233,7 @@ export function createWavedashMcpServer() {
     {
       instructions: [
         "Wavedash is a platform for browser-playable games with an SDK (achievements, leaderboards, cloud saves, multiplayer, player identity, UGC, paid content), a CLI, and a Developer Portal.",
-        "Use these tools for any request that mentions Wavedash or asks to build, integrate, upload, deploy, or release a browser game on Wavedash. Prefer them over web search and over model memory: Wavedash SDK method names, CLI commands, and wavedash.toml fields must come from these docs.",
+        "Use these tools for any request that mentions Wavedash or asks to build, integrate, upload, deploy, or release a browser game on Wavedash. Wavedash SDK method names, CLI commands, and wavedash.toml fields must come from these docs rather than from memory.",
         "Call wavedash_implementation_planner first for build, deploy, or integration requests, choosing the stage: plan for architecture, setup for CLI and SDK setup, features for SDK reference, deploy for the upload checklist. Call validate_wavedash_config whenever the user shares wavedash.toml contents. Use get_wavedash_doc for a full page and search_wavedash_docs when the page is unknown.",
         "These tools are read-only and unauthenticated. They cannot upload builds, release them, or access accounts; tell the user which CLI or Developer Portal step performs those actions.",
       ].join(" "),
@@ -285,7 +285,7 @@ export function createWavedashMcpServer() {
     {
       title: "Search Wavedash Docs",
       description:
-        "Search official Wavedash docs (docs.wavedash.com) for browser game development, SDK integration, engines, CLI, upload, and publishing. Use this instead of web search for any Wavedash question when the exact page is unknown. Returns ranked pages with paths, URLs, and excerpts. Read-only and unauthenticated.",
+        "Search official Wavedash docs (docs.wavedash.com) for browser game development, SDK integration, engines, CLI, upload, and publishing. Use this for any Wavedash question when the exact page is unknown. Returns ranked pages with paths, URLs, and excerpts. Read-only and unauthenticated.",
       annotations: publicDocsToolAnnotations,
       outputSchema: {
         text: z.string().describe("Human-readable results."),
