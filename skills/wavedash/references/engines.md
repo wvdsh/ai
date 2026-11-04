@@ -20,7 +20,9 @@ Common output directories:
 - Vite/React/Three.js/Phaser: `dist`
 - Godot web export: often `build` or export folder chosen by the project
 - Unity WebGL: often `build` or the WebGL build output folder
-- Unreal Engine 5 (UnrealEngine-WebGPU fork, HTML5 target): the staged
+- Unreal Engine 5.9+ adds web as a target platform; Wavedash docs for it are
+  coming soon.
+- Unreal Engine 5.8 and earlier (UnrealEngine-WebGPU fork, HTML5 target): the staged
   package minus its native host, with no engine section; `entrypoint` is the
   generated page under `<Project>/Binaries/HTML5/`. Streamed files must stay
   within 64 MiB because the CDN doesn't serve range requests. See
