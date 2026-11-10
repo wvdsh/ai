@@ -20,12 +20,11 @@ Common output directories:
 - Vite/React/Three.js/Phaser: `dist`
 - Godot web export: often `build` or export folder chosen by the project
 - Unity WebGL: often `build` or the WebGL build output folder
-- Unreal Engine 5.9+ adds web as a target platform; Wavedash docs for it are
-  coming soon.
-- Unreal Engine 5.8 and earlier (UnrealEngine-WebGPU fork, HTML5 target): the staged
-  package minus its native host, with no engine section; `entrypoint` is the
-  generated page under `<Project>/Binaries/HTML5/`. Streamed files must stay
-  within 64 MiB because the CDN doesn't serve range requests. See
+- Unreal Engine 5.9+ (Wasm target, C++ projects, emscripten 6.0.10): the staged
+  `Wasm` folder from `BuildCookRun -platform=Wasm -archive -archivedirectory=build`
+  (never `Wasm-Debug`), with no engine section and `entrypoint = "index.html"`.
+  Package Shipping with `-AdditionalPackageOptions=-WasmNoBrotli`. A page script in
+  `Build/Wasm/Template/` loaded by `IntroShellScript` calls `Wavedash.init()`. See
   https://docs.wavedash.com/engines/unreal
 - custom HTML/JS: folder containing `index.html`
 
