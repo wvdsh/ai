@@ -41,8 +41,9 @@ Pull from a local docs checkout:
 WAVEDASH_SKILLS_SOURCE_DIR=/path/to/wvdsh/docs/skills npm run sync:skills
 ```
 
-GitHub Actions runs the same sync daily and commits changes when docs updates
-change the generated skill files.
+GitHub Actions runs the same sync daily. When docs updates change the generated
+skill files, it opens or updates a single pull request from the `sync/skills`
+branch, which a code owner must review and merge.
 
 ## MCP server
 

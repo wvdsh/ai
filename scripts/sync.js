@@ -9,10 +9,7 @@ const repoRoot = path.resolve(
   "..",
 );
 const localSourceDir = process.env.WAVEDASH_SKILLS_SOURCE_DIR;
-const remoteBaseUrl = (
-  process.env.WAVEDASH_SKILLS_BASE_URL ||
-  "https://docs.wavedash.com/.well-known/skills"
-).replace(/\/+$/, "");
+const remoteBaseUrl = "https://docs.wavedash.com/.well-known/skills";
 const skillOutputDirs = [
   path.join(repoRoot, "skills"),
   path.join(repoRoot, "providers/claude/plugin/skills"),

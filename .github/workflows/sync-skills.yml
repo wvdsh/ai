@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 jobs:
   sync:
@@ -23,7 +24,10 @@ jobs:
       - name: Sync skills
         run: node scripts/sync.js
 
-      - name: Commit changes
+      - name: Open or update pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BRANCH: sync/skills
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -33,8 +37,23 @@ jobs:
             providers/cursor/plugin/skills \
             providers/openai/plugin/skills
           if git diff --cached --quiet; then
-            echo "No skill changes to commit."
+            echo "Skills match main."
+            if git ls-remote --exit-code --heads origin "$BRANCH" > /dev/null; then
+              git push origin --delete "$BRANCH"
+            fi
             exit 0
           fi
+          if git fetch --depth 1 origin "$BRANCH" && git diff --cached --quiet FETCH_HEAD; then
+            echo "Pull request is already up to date."
+            exit 0
+          fi
+          git switch -c "$BRANCH"
           git commit -m "sync skills"
-          git push
+          git push --force origin "$BRANCH"
+          if [ -z "$(gh pr list --head "$BRANCH" --base main --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --base main \
+              --head "$BRANCH" \
+              --title "Sync skills from docs.wavedash.com" \
+              --body "Automated sync of skill files fetched from https://docs.wavedash.com/.well-known/skills. These files are instructions that coding agents execute, so read the diff before merging. This pull request is force-updated daily while it stays open."
+          fi
