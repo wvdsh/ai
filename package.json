@@ -13,6 +13,6 @@
     "mcp:deploy": "npm --prefix mcp run deploy"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=24"
   }
 }
