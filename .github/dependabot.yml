@@ -1,0 +1,16 @@
+# Docker base-image bumps only.
+# There are deliberately no npm or github-actions entries: without them
+# Dependabot opens no version-bump PRs for those, and security updates
+# (enabled in repo settings) still run.
+version: 2
+updates:
+  - package-ecosystem: docker
+    directory: "/mcp"
+    schedule:
+      interval: monthly
+    cooldown:
+      default-days: 7
+    ignore:
+      - dependency-name: "node"
+        update-types:
+          - "version-update:semver-major"
